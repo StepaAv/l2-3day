@@ -1,0 +1,14 @@
+.trader {
+    display: flex;
+    margin-bottom: 30px;
+}
+/* .refresh-btn {
+    margin-right: 10px;
+    height: 30px;
+} */
+
+.trader-name {
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: 20px;
+}
