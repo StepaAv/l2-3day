@@ -1,3 +1,20 @@
+@font-face {
+    font-family: "LexendExa";
+    src:  url("LexendExa.ttf") format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+body
+{
+    font-family: "LexendExa";
+    font-weight: 400;
+    font-style: normal;
+}
+
+button {
+    font-family: inherit;
+}
 .trader {
     display: flex;
     margin-bottom: 30px;
@@ -11,4 +28,10 @@
     margin-right: 20px;
     margin-left: 20px;
     font-size: 20px;
+}
+
+.rendered-trader {
+    padding-right: 20px;
+    /* font-size: 15px; */
+    font-weight: bold;
 }

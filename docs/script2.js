@@ -13,6 +13,12 @@ let nameArr = [];
 
 let testArr = [];
 
+let tradersList = '';
+
+let pageReload = () => {
+    location.reload();
+}
+
 let pushNameToArr = (name) => {
     nameArr.push(name)
 }
@@ -23,17 +29,13 @@ let getName = () => {
 let getTime = () => {
     tradersDate = new Date();
     tradersDate.setHours( tradersDate.getHours() +72 );
+    tradersDate.toUTCString();
+    return tradersDate;
 }
 let setLocalSotrage = () => {
     localStorage.setItem(traderName, tradersDate);
 }
 
-let renderSegment = () => {
-    let tempName = document.createElement('p');
-    tempName.innerHTML = `<b>${traderName}</b>  ${tradersDate}`;
-    allTraders.prepend(tempName);
-
-}
 
 let renderStorageName = (num) => {
     return localStorage.key(num);
@@ -46,17 +48,26 @@ let renderStorageName = (num) => {
  let onloadRender = () => {
      if (localStorage.key(0)) {
         for (let i = 0; i < localStorage.length; i++) {
-            let tempName = document.createElement('p');
-            tempName.innerHTML = `<b>${renderStorageName(i)}</b> ${renderStorageTime(renderStorageName(i))}`
-            allTraders.prepend(tempName);
+            let tempBlock = document.createElement('div');
+            let tempName = document.createElement('span');
+            let tempTime = document.createElement('span')
+            tempTime.classList.add('traders-time')
+            tempName.classList.add('rendered-trader');
+            tempName.innerHTML = `${renderStorageName(i)}`
+            tempTime.innerHTML = `${renderStorageTime(renderStorageName(i))}`;
+            tempBlock.prepend(tempTime);
+            tempBlock.prepend(tempName);
+            allTraders.prepend(tempBlock);
         }
-        for (let i = 0; i < localStorage.length; i++) {
-            let testObj = {};
-            testObj.name = renderStorageName(i);
-            testObj.fuck = renderStorageTime(renderStorageName(i));
-            testArr.push(testObj);
+        tradersList = document.querySelectorAll('.rendered-trader');
+        for (let item of tradersList) {
+            item.onclick= () => {
+                if (confirm('delete trader?')) {
+                    localStorage.removeItem(item.innerHTML);
+                    pageReload();
+                }
+            }
         }
- 
      }
  }
 
@@ -65,12 +76,15 @@ let renderStorageName = (num) => {
     getName();
     pushNameToArr(getName);
     setLocalSotrage();
-    renderSegment();
+    pageReload();
 }
 
 confirmTrader.onclick = construct;
 window.onload = onloadRender;
 clearButton.onclick = () => {
-    localStorage.clear();
-    location.reload();
+    if (confirm('точно не ебнулся?')) {
+        localStorage.clear();
+        pageReload();   
+    }
+
 }
