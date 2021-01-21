@@ -5,6 +5,7 @@ let viewTraderName = document.querySelector('.trader-name');
 let viewTraderTime = document.querySelector('.trader-time');
 let clearButton = document.querySelector('.clear');
 let allTraders = document.querySelector('.all-traders');
+let dayOfTheweek = document.querySelectorAll('.day');
 
 
 let traderName = '';
@@ -14,6 +15,19 @@ let nameArr = [];
 let testArr = [];
 
 let tradersList = '';
+
+let inkCurrentDay = () => {
+    let d = new Date();
+    let n = d.getDay();
+    
+    for (let item of dayOfTheweek) {
+        let day = item.querySelector('.day-name').innerHTML;
+        if (n == day) {
+            item.classList.add('current-day');
+        }
+        
+    }
+}
 
 let pageReload = () => {
     location.reload();
@@ -46,6 +60,7 @@ let renderStorageName = (num) => {
  }
  
  let onloadRender = () => {
+     inkCurrentDay();
      if (localStorage.key(0)) {
         for (let i = 0; i < localStorage.length; i++) {
             let tempBlock = document.createElement('div');
@@ -68,6 +83,26 @@ let renderStorageName = (num) => {
                 }
             }
         }
+        tradersTimeList = document.querySelectorAll('.traders-time');
+        for (let item of tradersTimeList) {
+            item.onclick= () => {
+                if (confirm('update time?')) {
+                    let itemFather = item.parentElement.querySelector('.rendered-trader');
+                    localStorage.setItem(itemFather.innerHTML, getTime());
+                    pageReload();
+                }
+            }
+        }
+        for (let item of tradersTimeList) {
+            let cuts = item.innerHTML.substring(0 ,3);
+            let itemFather = item.parentElement.querySelector('.rendered-trader');
+            for (let item2 of dayOfTheweek) {
+               if (item2.classList.contains(cuts)) {
+                   console.log('sunday')
+                   item2.querySelector('.trader-name').innerHTML += `${itemFather.innerHTML} <br>`;
+               }
+            }
+        }
      }
  }
 
@@ -78,6 +113,9 @@ let renderStorageName = (num) => {
     setLocalSotrage();
     pageReload();
 }
+
+
+
 
 confirmTrader.onclick = construct;
 window.onload = onloadRender;

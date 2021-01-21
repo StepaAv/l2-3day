@@ -35,3 +35,30 @@ button {
     /* font-size: 15px; */
     font-weight: bold;
 }
+
+.week {
+    display: flex;
+    margin-top: 40px;
+}
+
+.day {
+    width: 130px;
+    min-height: 70px;
+    border: 1px solid black;
+}
+
+.day-name {
+    margin-top: 1px;
+    margin-bottom: 2px;
+    color: brown;
+}
+
+.trader-name {
+    margin-top: 3px;
+    margin-left: 2px;
+    font-size: 15px;
+}
+
+.current-day {
+    background-color: #ffcc99;
+}
